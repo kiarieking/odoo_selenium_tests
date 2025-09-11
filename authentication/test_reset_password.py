@@ -13,4 +13,5 @@ def test_reset_password(driver):
     email.send_keys("kelvin.kiarie@quatrixglobal.com")
     confirm = driver.find_element(By.XPATH,"//button[normalize-space()='Confirm']")
     confirm.click()
-    assert "Email reset password has been sent to this email" in driver.page_source
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//p[@class='alert alert-success' and @role='status']")))
+    assert "An email has been sent with credentials to reset your password" in driver.page_source
