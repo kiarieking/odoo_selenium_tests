@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
+import time
 def test_create_carrier(login, driver, carrier_icon):
     email = "kelvin.kiarie@quatrixglobal.com"
     password = "$kingara120"
@@ -11,12 +11,15 @@ def test_create_carrier(login, driver, carrier_icon):
     group_orders(driver)
     open_order(driver)
     click_edit_button(driver)
-    edit_vehicle_registration(driver)
+    # edit_vehicle_registration(driver)
     edit_delivery_no(driver)
     edit_reference_no(driver)
     edit_description(driver)
     edit_quantity(driver)
     edit_cost(driver)
+    save_changes(driver)
+    order_no = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "order_no")))
+    assert order_no.text == "632-IAT0001378-text"
 
 def group_orders(driver):
     group_by = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
@@ -43,7 +46,8 @@ def edit_vehicle_registration(driver):
 def edit_delivery_no(driver):
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "order_no")))
     element.clear()
-    element.send_keys("632-IAT0001378")
+    element.send_keys("632-IAT0001378-text")
+    
 
 def edit_quantity(driver):
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "quantity")))
@@ -66,5 +70,6 @@ def edit_reference_no(driver):
     element.send_keys("DO9429")
 
 def save_changes(driver):
-    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "action_confirm")))
+    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[span[normalize-space(text())='Save']]")))
     element.click()
+    
