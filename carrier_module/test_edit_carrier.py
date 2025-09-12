@@ -19,7 +19,7 @@ def test_create_carrier(login, driver, carrier_icon):
     edit_cost(driver)
     save_changes(driver)
     order_no = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "order_no")))
-    assert order_no.text == "632-IAT0001378-text"
+    assert order_no.text == "632-IAT0001378-text21"
 
 def group_orders(driver):
     group_by = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
@@ -46,7 +46,8 @@ def edit_vehicle_registration(driver):
 def edit_delivery_no(driver):
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "order_no")))
     element.clear()
-    element.send_keys("632-IAT0001378-text")
+    element.send_keys("632-IAT0001378-text21")
+    time.sleep(3)
     
 
 def edit_quantity(driver):
@@ -72,4 +73,4 @@ def edit_reference_no(driver):
 def save_changes(driver):
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[span[normalize-space(text())='Save']]")))
     element.click()
-    
+    time.sleep(3)
