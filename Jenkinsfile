@@ -16,6 +16,11 @@ pipeline{
 
                 '''
                 echo "======== execute the tests ========"
+                sh '''
+
+                    echo "im here"
+
+                '''
 
             }
             
