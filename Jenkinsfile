@@ -14,7 +14,9 @@ pipeline{
 
                     pwd
 
-                    ls -al
+                    pyenv activate pytestenv
+
+                    echo $VIRTUAL_ENV
 
                 '''
                 echo "======== execute the tests ========"
