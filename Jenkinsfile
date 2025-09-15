@@ -10,9 +10,11 @@ pipeline{
             steps{
                 echo "======== navigate to tests folder ========"
                 sh '''
-                    cd /home/kkiarie/code/pytest/odoo_selenium_tests
+                    
 
                     pwd
+
+                    ls -al
 
                 '''
                 echo "======== execute the tests ========"
