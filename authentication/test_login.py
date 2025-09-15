@@ -2,6 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 @pytest.fixture
 def login(driver):
@@ -16,9 +17,10 @@ def login(driver):
 
 def logout(driver):
     driver.get('https://sandbox.erp.quatrixglobal.com/')
-    usermenu = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.oe_topbar_name")))
+    usermenu = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[text()='Kelvin Kiarie']")))
     usermenu.click()
-    driver.find_element(By.XPATH, "//a[@data-menu='logout']").click()
+    logout_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[normalize-space(text())='Log out']")))
+    logout_btn.click()
 
     
     
@@ -27,6 +29,7 @@ def test_valid_login(driver, login):
     WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@class='o_menu_brand' and normalize-space()='Discuss']")))
     assert "Discuss" in driver.page_source
     logout(driver)
+    time.sleep(3)
     
 def test_invalid_login(driver, login):
     login("test123432@email.com", "pwd123")
