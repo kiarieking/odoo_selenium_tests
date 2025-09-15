@@ -15,6 +15,8 @@ pipeline{
                     pwd
 
                 '''
+                echo "======== execute the tests ========"
+
             }
             
         }
