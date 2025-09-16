@@ -1,14 +1,17 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from dotenv import load_dotenv
+import os
 import time
 
 def test_confirm_order(driver,login,carrier_icon):
-    email = "kelvin.kiarie@quatrixglobal.com"
-    password = "$kingara120"
+    load_dotenv()
+    EMAIL = os.getenv('EMAIL')
+    PASSWORD = os.getenv('PASSWORD')
     status = "Quotation"
     carrier_no = "CO12825"
-    login(email,password)
+    login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)

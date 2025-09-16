@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from dotenv import load_dotenv
+import os
 
 @pytest.fixture(scope='session')
 def driver():
@@ -21,7 +23,9 @@ def driver():
 @pytest.fixture(scope="session")
 def login(driver):
     def _login(email,password):
-        driver.get('https://sandbox.erp.quatrixglobal.com/')
+        load_dotenv()
+        URL = os.getenv('URL')
+        driver.get(URL)
         
         driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
