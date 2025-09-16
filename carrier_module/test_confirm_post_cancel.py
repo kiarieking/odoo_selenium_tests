@@ -33,6 +33,15 @@ def test_cancel_order(driver,login,carrier_icon):
     cancel_order(driver)
     time.sleep(2)
 
+def test_reset_order(driver,carrier_icon):
+    status = "Cancelled"
+    carrier_no = "CO12840"
+    carrier_icon()
+    group_orders(driver)
+    open_order(driver,status,carrier_no)
+    reset_order(driver)
+    time.sleep(2)
+
 def group_orders(driver):
     group_by = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
     group_by.click()
@@ -68,5 +77,13 @@ def cancel_order(driver):
     cancel_btn.click()
     time.sleep(2)
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='cancel']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
+
+def reset_order(driver):
+    reset_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "action_reset")))
+    reset_btn.click()
+    time.sleep(2)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='draft']")))
     title = status.get_attribute("title")
     assert title == "Current state"
