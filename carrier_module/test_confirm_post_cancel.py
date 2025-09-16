@@ -3,29 +3,29 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 
-# def test_confirm_order(driver,login,carrier_icon):
-#     email = "kelvin.kiarie@quatrixglobal.com"
-#     password = "$kingara120"
-#     status = "Quotation"
-#     carrier_no = "CO12835"
-#     login(email,password)
-#     carrier_icon()
-#     group_orders(driver)
-#     open_order(driver,status,carrier_no)
-#     confirm_order(driver)
-#     time.sleep(5)
+def test_confirm_order(driver,login,carrier_icon):
+    email = "kelvin.kiarie@quatrixglobal.com"
+    password = "$kingara120"
+    status = "Quotation"
+    carrier_no = "CO12835"
+    login(email,password)
+    carrier_icon()
+    group_orders(driver)
+    open_order(driver,status,carrier_no)
+    confirm_order(driver)
+    time.sleep(5)
 
-# def test_post_order(driver,login,carrier_icon):
-#     email = "kelvin.kiarie@quatrixglobal.com"
-#     password = "$kingara120"
-#     status = "Order"
-#     carrier_no = "CO12840"
-#     login(email,password)
-#     carrier_icon()
-#     group_orders(driver)
-#     open_order(driver,status,carrier_no)
-#     post_order(driver)
-#     time.sleep(3)
+def test_post_order(driver,login,carrier_icon):
+    email = "kelvin.kiarie@quatrixglobal.com"
+    password = "$kingara120"
+    status = "Order"
+    carrier_no = "CO12840"
+    login(email,password)
+    carrier_icon()
+    group_orders(driver)
+    open_order(driver,status,carrier_no)
+    post_order(driver)
+    time.sleep(3)
 
 def test_cancel_order(driver,login,carrier_icon):
     email = "kelvin.kiarie@quatrixglobal.com"
