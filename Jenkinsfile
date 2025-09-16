@@ -36,6 +36,8 @@ pipeline{
 
                     pytest -q --tb=short authentication
 
+                    echo "I'm here"
+
                 '''
             }
         }
