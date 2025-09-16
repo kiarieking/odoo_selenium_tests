@@ -6,9 +6,9 @@ pipeline{
 
     }
     stages{
-        stage("A"){
+        stage("setup environment"){
             steps{
-                echo "======== navigate to tests folder ========"
+               
                 sh '''
                     
 
@@ -28,10 +28,14 @@ pipeline{
             
         }
 
-        stage("B"){
+        stage("run the tests"){
             steps{
                 sh '''
-                    echo "I'm here"
+                    
+                    . venv/bin/activate
+
+                    pytest -q --tb=short authentication
+
                 '''
             }
         }

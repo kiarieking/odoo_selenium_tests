@@ -5,11 +5,16 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture(scope='session')
 def driver():
     service = Service('/usr/bin/chromedriver')
-    driver = webdriver.Chrome(service=service)
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(service=service,options=options)
     yield driver
     driver.quit()
     
