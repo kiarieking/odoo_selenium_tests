@@ -14,19 +14,26 @@ pipeline{
 
                     pwd
 
-                    pip install pyenv
+                    python3 -m venv venv
+
+                    . venv/bin/activate
+
+                    pip install -r requirements.txt
 
 
                 '''
-                echo "======== execute the tests ========"
-                sh '''
-
-                    echo "im here"
-
-                '''
+                
 
             }
             
+        }
+
+        stage("B"){
+            steps{
+                sh '''
+                    echo "I'm here"
+                '''
+            }
         }
     }
     post{
