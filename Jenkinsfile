@@ -14,7 +14,8 @@ pipeline{
 
                     pwd
 
-                   
+                    pip install pyenv
+
 
                 '''
                 echo "======== execute the tests ========"
