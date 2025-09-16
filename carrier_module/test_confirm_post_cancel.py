@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 import os
 import time
 
+load_dotenv()
+EMAIL = os.getenv('EMAIL')
+PASSWORD = os.getenv('PASSWORD')
+
 def test_confirm_order(driver,login,carrier_icon):
-    load_dotenv()
-    EMAIL = os.getenv('EMAIL')
-    PASSWORD = os.getenv('PASSWORD')
     status = "Quotation"
     carrier_no = "CO12825"
     login(EMAIL,PASSWORD)
