@@ -7,37 +7,31 @@ def test_confirm_order(driver,login,carrier_icon):
     email = "kelvin.kiarie@quatrixglobal.com"
     password = "$kingara120"
     status = "Quotation"
-    carrier_no = "CO12835"
+    carrier_no = "CO12825"
     login(email,password)
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
     confirm_order(driver)
-    time.sleep(5)
+    time.sleep(2)
 
 def test_post_order(driver,login,carrier_icon):
-    email = "kelvin.kiarie@quatrixglobal.com"
-    password = "$kingara120"
     status = "Order"
-    carrier_no = "CO12840"
-    login(email,password)
+    carrier_no = "CO12778"
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
     post_order(driver)
-    time.sleep(3)
+    time.sleep(2)
 
 def test_cancel_order(driver,login,carrier_icon):
-    email = "kelvin.kiarie@quatrixglobal.com"
-    password = "$kingara120"
     status = "Posted"
-    carrier_no = "CO12840" 
-    login(email,password)
+    carrier_no = "CO12753" 
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
     cancel_order(driver)
-    time.sleep(1)
+    time.sleep(2)
 
 def group_orders(driver):
     group_by = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
