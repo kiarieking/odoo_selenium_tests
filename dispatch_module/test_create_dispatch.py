@@ -15,6 +15,7 @@ def test_create_dispatch(driver,login,dispatch_icon):
     open_new_dispatch(driver)
     add_shipper(driver)
     add_vehicle(driver)
+    add_product_line(driver)
     
 def open_new_dispatch(driver):
     create_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[.//span[normalize-space(text())='Create']]")))
@@ -42,6 +43,27 @@ def add_product_line(driver):
     product_input.click()
     product = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.LINK_TEXT, "[KEDA] CHAVAKALI 28T")))
     product.click()
+    delivery_no = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "order_no")))
+    delivery_no.send_keys("123_test")
+    description = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "description")))
+    description.send_keys("test description")
+    narration = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "notes")))
+    narration.click()
+    narration.send_keys("test narration")
+    quantity = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "quantity")))
+    quantity.click()
+    quantity.send_keys("2")
+    unit_price = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "price_unit")))
+    unit_price.click()
+    unit_price.send_keys("50")
+    carrier_charge = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "carrier_price")))
+    carrier_charge.click()
+    carrier_charge.send_keys("200")
+    save_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='d-none d-sm-inline' and normalize-space(text())='Save']")))
+    save_btn.click()
+    time.sleep(3)
+
+
 
 
 
