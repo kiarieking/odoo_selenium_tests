@@ -8,15 +8,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
 import os
+import tempfile
 
 @pytest.fixture(scope='session')
 def driver():
     service = Service('/usr/bin/chromedriver')
+    temp_profile = tempfile.mkdtemp()
     options = Options()
-    options.add_argument("--headless")
+    options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(service=service)
+    options.add_argument(f"--user-data-dir={temp_profile}")
+    driver = webdriver.Chrome(service=service,options=options)
     yield driver
     driver.quit()
     
