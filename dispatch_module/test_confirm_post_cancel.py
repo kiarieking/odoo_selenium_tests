@@ -19,14 +19,23 @@ PASSWORD = os.getenv("PASSWORD")
 #     complete_delivery(driver)
 #     time.sleep(3)
 
-def test_post_dispatch(driver,login,dispatch_icon):
-    status = "Dispatch Order"
-    dispatch_no = "DO9022"
+# def test_post_dispatch(driver,login,dispatch_icon):
+#     status = "Dispatch Order"
+#     dispatch_no = "DO9022"
+#     login(EMAIL,PASSWORD)
+#     dispatch_icon()
+#     group_dispatch(driver)
+#     open_dispatch(driver,status,dispatch_no)
+#     post_dispatch(driver)
+
+def test_cancel_dispatch(driver, login, dispatch_icon):
+    status = "Posted"
+    dispatch_no = "DO9996"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
     open_dispatch(driver,status,dispatch_no)
-    post_dispatch(driver)
+    cancel_dispatch(driver)
 
 
 def group_dispatch(driver):
@@ -67,6 +76,15 @@ def post_dispatch(driver):
     title = status.get_attribute("title")
     assert title == "Current state"
     time.sleep(3)
+
+def cancel_dispatch(driver):
+    cancel_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "action_cancel")))
+    cancel_btn.click()
+    time.sleep(2)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='cancel']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
+    time.sleep(3)    
 
 
 
