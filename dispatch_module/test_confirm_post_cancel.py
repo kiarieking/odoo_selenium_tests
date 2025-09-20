@@ -9,15 +9,25 @@ load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
-def test_confirm_dispatch(driver,login,dispatch_icon):
-    status = "Quotation"
-    dispatch_no = "DO10608"
+# def test_confirm_dispatch(driver,login,dispatch_icon):
+#     status = "Quotation"
+#     dispatch_no = "DO10608"
+#     login(EMAIL,PASSWORD)
+#     dispatch_icon()
+#     group_dispatch(driver)
+#     open_dispatch(driver,status, dispatch_no)
+#     complete_delivery(driver)
+#     time.sleep(3)
+
+def test_post_dispatch(driver,login,dispatch_icon):
+    status = "Dispatch Order"
+    dispatch_no = "DO9022"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
-    open_dispatch(driver,status, dispatch_no)
-    complete_delivery(driver)
-    time.sleep(3)
+    open_dispatch(driver,status,dispatch_no)
+    post_dispatch(driver)
+
 
 def group_dispatch(driver):
     group_by = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
@@ -48,5 +58,15 @@ def complete_delivery(driver):
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='order']")))
     title = status.get_attribute("title")
     assert title == "Current state"
+
+def post_dispatch(driver):
+    post_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "action_post")))
+    post_btn.click()
+    time.sleep(2)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='posted']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
+    time.sleep(3)
+
 
 
