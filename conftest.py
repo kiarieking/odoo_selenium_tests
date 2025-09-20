@@ -57,3 +57,16 @@ def carrier_icon(driver):
         WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//li[@class='breadcrumb-item active' and text()='Carrier Quotations']")))
         assert "Carrier Quotations" in driver.page_source
     return _carrier_icon
+
+@pytest.fixture
+def billing_icon(driver):
+    def _billing_icon():
+        load_dotenv(".env.icons_base64img")
+        icon_billing = os.getenv("BILLING")
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
+        burger.click()
+        driver.find_element(By.XPATH, icon_billing).click()
+        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[normalize-space()='Billing']")))
+        assert "Billing" in driver.page_source
+    return _billing_icon
+        

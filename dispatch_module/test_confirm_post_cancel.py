@@ -11,7 +11,7 @@ PASSWORD = os.getenv("PASSWORD")
 
 def test_confirm_dispatch(driver,login,dispatch_icon):
     status = "Quotation"
-    dispatch_no = "DO10608"
+    dispatch_no = "DO10635"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
@@ -21,7 +21,7 @@ def test_confirm_dispatch(driver,login,dispatch_icon):
 
 def test_post_dispatch(driver,login,dispatch_icon):
     status = "Dispatch Order"
-    dispatch_no = "DO9022"
+    dispatch_no = "DO9028"
     # login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
@@ -30,7 +30,7 @@ def test_post_dispatch(driver,login,dispatch_icon):
 
 def test_cancel_dispatch(driver, login, dispatch_icon):
     status = "Posted"
-    dispatch_no = "DO9996"
+    dispatch_no = "DO9991"
     # login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
