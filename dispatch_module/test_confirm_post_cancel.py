@@ -36,6 +36,12 @@ def open_dispatch(driver,status,dispatch_no):
     time.sleep(3)
 
 def complete_delivery(driver):
+    edit_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[normalize-space()='Edit']")))
+    edit_btn.click()
+    pod_input = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//input[@type='file' and @name='ufile']")))
+    pod_input.send_keys("/home/kkiarie/Downloads/sample.pdf")
+    save_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='d-none d-sm-inline' and normalize-space(text())='Save']")))
+    save_btn.click()                                          
     complete_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "action_confirm")))
     complete_btn.click()
     time.sleep(2)
