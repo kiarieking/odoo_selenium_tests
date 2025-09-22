@@ -25,6 +25,15 @@ def test_post_voucher(driver,login,fuel_icon):
     status = "Fuel Order"
     voucher_no = "FO3930"
     open_voucher(driver,status,voucher_no)
+
+def test_cancel_voucher(driver,login,fuel_icon):
+    login(EMAIL,PASSWORD)
+    fuel_icon()
+    group_vouchers(driver)
+    status = "Fuel Order"
+    voucher_no = "FO3930"
+    open_voucher(driver,status,voucher_no)
+
     
 
 def group_vouchers(driver):
@@ -53,4 +62,32 @@ def confirm_voucher(driver):
             print("status is " + str(title))
 
         time.sleep(3)
+
+def post_voucher(driver):
+    fuelorder_grp = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//th[@class='o_group_name' and contains(text(), 'Fuel Order')]")))
+    fuelorder_grp.click()
+    fuel_order = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, '//td[@class="o_data_cell o_field_cell o_list_char o_readonly_modifier o_required_modifier" and text()="FO3325"]')))
+    fuel_order.click()
+    status = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='order' and contains(@class, 'o_arrow_button') and text()[contains(., 'Fuel Order')]]")))
+    title = status.get_attribute('title')
+    if(title == "Current state"):
+        post_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "action_post")))
+        post_btn.click()
+        time.sleep(3)
+    else:
+        print("fuel order is not " + str(title))
+    time.sleep(5)
     
+def cancel_voucher(driver):
+        fuelorder_grp = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//th[@class='o_group_name' and contains(text(), 'Fuel Order')]")))
+        fuelorder_grp.click()
+        fuel_order = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, '//td[@class="o_data_cell o_field_cell o_list_char o_readonly_modifier o_required_modifier" and text()="FO3323"]')))
+        fuel_order.click()
+        status = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='order' and contains(@class, 'o_arrow_button') and text()[contains(., 'Fuel Order')]]")))
+        title = status.get_attribute('title')
+        if(title=="Current state"):
+            cancel = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME, "action_cancel")))
+            cancel.click()
+            time.sleep(3)
+        else:
+            print("fuel order is not " + str(title))
