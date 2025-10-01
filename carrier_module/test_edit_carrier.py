@@ -2,8 +2,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+import pytest
 
-
+@pytest.mark.order(6)
 def test_create_carrier(login, driver, carrier_icon):
     email = "kelvin.kiarie@quatrixglobal.com"
     password = "$kingara120"

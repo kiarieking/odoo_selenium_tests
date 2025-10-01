@@ -4,11 +4,13 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import pytest
 
 load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
+@pytest.mark.order(15)
 def test_confirm_voucher(driver,login,fuel_icon):
     login(EMAIL,PASSWORD)
     fuel_icon()
@@ -18,6 +20,7 @@ def test_confirm_voucher(driver,login,fuel_icon):
     open_voucher(driver,status,voucher_no)
     confirm_voucher(driver)
 
+@pytest.mark.order(16)
 def test_post_voucher(driver,login,fuel_icon):
     # login(EMAIL,PASSWORD)
     fuel_icon()
@@ -26,6 +29,7 @@ def test_post_voucher(driver,login,fuel_icon):
     voucher_no = "FO3911"
     open_voucher(driver,status,voucher_no)
 
+@pytest.mark.order(17)
 def test_cancel_voucher(driver,login,fuel_icon):
     # login(EMAIL,PASSWORD)
     fuel_icon()
