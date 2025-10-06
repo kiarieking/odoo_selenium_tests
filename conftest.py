@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 import os
 import tempfile
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def driver():
     service = Service('/usr/bin/chromedriver')
     temp_profile = tempfile.mkdtemp()
@@ -40,7 +40,8 @@ def dispatch_icon(driver):
     def _dispatch_icon():
         load_dotenv(".env.icons_base64img")
         icon_dispatch = os.getenv("DISPATCH")
-        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
+        print(type(icon_dispatch))
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH, "(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
         burger.click()
         driver.find_element(By.XPATH, icon_dispatch).click()
     return _dispatch_icon
