@@ -6,9 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 import tempfile
+import base64
 
 @pytest.fixture(scope='function')
 def driver():
@@ -23,13 +24,13 @@ def driver():
     yield driver
     driver.quit()
     
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def login(driver):
     def _login(email,password):
         load_dotenv()
         URL = os.getenv('URL')
         driver.get(URL)
-        
+
         driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
         driver.find_element(By.XPATH, "//button[@type='submit' and contains(@class, 'btn-primary')]").click()
@@ -38,19 +39,28 @@ def login(driver):
 @pytest.fixture
 def dispatch_icon(driver):
     def _dispatch_icon():
-        load_dotenv(".env.icons_base64img")
+        env_path = find_dotenv(".env.icons_base64img")
+        load_dotenv(env_path)
         icon_dispatch = os.getenv("DISPATCH")
+        if not icon_dispatch:
+            raise RuntimeError("❌ DISPATCH not found or empty in .env.icons_base64img")
+
+        print("XPath used for dispatch icon:", icon_dispatch)
+
         print(type(icon_dispatch))
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH, "(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
         burger.click()
-        driver.find_element(By.XPATH, icon_dispatch).click()
+        icon = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH, icon_dispatch)))
+        icon.click()
+        # driver.find_element(By.XPATH, icon_dispatch).click()
     return _dispatch_icon
         
 
 @pytest.fixture
 def carrier_icon(driver):
     def _carrier_icon():
-        load_dotenv(".env.icons_base64img")
+        env_path = find_dotenv(".env.icons_base64img")
+        load_dotenv(env_path)
         icon_carrier = os.getenv("CARRIER")
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
         burger.click()
@@ -62,7 +72,8 @@ def carrier_icon(driver):
 @pytest.fixture
 def billing_icon(driver):
     def _billing_icon():
-        load_dotenv(".env.icons_base64img")
+        env_path = find_dotenv(".env.icons_base64img")
+        load_dotenv(env_path)
         icon_billing = os.getenv("BILLING")
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
         burger.click()
@@ -74,7 +85,8 @@ def billing_icon(driver):
 @pytest.fixture
 def fuel_icon(driver):
     def _fuel_icon():
-        load_dotenv(".env.icons_base64img")  
+        env_path = find_dotenv(".env.icons_base64img")
+        load_dotenv(env_path)  
         icon_fuel = os.getenv("FUEL")
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
         burger.click()
