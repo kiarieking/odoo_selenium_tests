@@ -16,13 +16,13 @@ def test_confirm_voucher(driver,login,fuel_icon):
     fuel_icon()
     group_vouchers(driver)
     status = "Quotation"
-    voucher_no = "FO3931"
+    voucher_no = "FO3927"
     open_voucher(driver,status,voucher_no)
     confirm_voucher(driver)
 
 @pytest.mark.order(4)
 def test_post_voucher(driver,login,fuel_icon):
-    # login(EMAIL,PASSWORD)
+    login(EMAIL,PASSWORD)
     fuel_icon()
     group_vouchers(driver)
     status = "Fuel Order"
@@ -31,7 +31,7 @@ def test_post_voucher(driver,login,fuel_icon):
 
 @pytest.mark.order(5)
 def test_cancel_voucher(driver,login,fuel_icon):
-    # login(EMAIL,PASSWORD)
+    login(EMAIL,PASSWORD)
     fuel_icon()
     group_vouchers(driver)
     status = "Fuel Order"
