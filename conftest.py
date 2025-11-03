@@ -20,7 +20,7 @@ def driver():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument(f"--user-data-dir={temp_profile}")
-    driver = webdriver.Chrome(service=service,options=options)
+    driver = webdriver.Chrome(service=service)
     yield driver
     driver.quit()
     
@@ -46,7 +46,7 @@ def dispatch_icon(driver):
             raise RuntimeError("❌ DISPATCH not found or empty in .env.icons_base64img")
 
         print(type(icon_dispatch))
-        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH, "(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH, "//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
         icon = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH, icon_dispatch)))
         icon.click()
