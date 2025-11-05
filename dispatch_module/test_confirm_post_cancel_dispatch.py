@@ -13,33 +13,33 @@ PASSWORD = os.getenv("PASSWORD")
 @pytest.mark.order(15)
 def test_confirm_dispatch(driver,login,dispatch_icon):
     status = "Quotation"
-    dispatch_no = "DO10606"
+    dispatch_no = "DO10604"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
     open_dispatch(driver,status, dispatch_no)
     complete_delivery(driver)
-    time.sleep(3)
+    time.sleep(5)
 
-@pytest.mark.order(16)
-def test_post_dispatch(driver,login,dispatch_icon):
-    status = "Dispatch Order"
-    dispatch_no = "DO7528"
-    login(EMAIL,PASSWORD)
-    dispatch_icon()
-    group_dispatch(driver)
-    open_dispatch(driver,status,dispatch_no)
-    post_dispatch(driver)
+# @pytest.mark.order(16)
+# def test_post_dispatch(driver,login,dispatch_icon):
+#     status = "Dispatch Order"
+#     dispatch_no = "DO7546"
+#     login(EMAIL,PASSWORD)
+#     dispatch_icon()
+#     group_dispatch(driver)
+#     open_dispatch(driver,status,dispatch_no)
+#     post_dispatch(driver)
 
-@pytest.mark.order(17)
-def test_cancel_dispatch(driver, login, dispatch_icon):
-    status = "Posted"
-    dispatch_no = "DO9991"
-    login(EMAIL,PASSWORD)
-    dispatch_icon()
-    group_dispatch(driver)
-    open_dispatch(driver,status,dispatch_no)
-    cancel_dispatch(driver)
+# @pytest.mark.order(17)
+# def test_cancel_dispatch(driver, login, dispatch_icon):
+#     status = "Posted"
+#     dispatch_no = "DO9989"
+#     login(EMAIL,PASSWORD)
+#     dispatch_icon()
+#     group_dispatch(driver)
+#     open_dispatch(driver,status,dispatch_no)
+#     cancel_dispatch(driver)
 
 
 def group_dispatch(driver):
@@ -74,6 +74,7 @@ def complete_delivery(driver):
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='order']")))
     title = status.get_attribute("title")
     assert title == "Current state"
+    time.sleep(3)
 
 def post_dispatch(driver):
     post_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "action_post")))

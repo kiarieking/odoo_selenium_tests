@@ -10,6 +10,7 @@ from dotenv import load_dotenv, find_dotenv
 import os
 import tempfile
 import base64
+import time
 
 @pytest.fixture(scope='function')
 def driver():
@@ -30,7 +31,7 @@ def login(driver):
         load_dotenv()
         URL = os.getenv('URL')
         driver.get(URL)
-
+        time.sleep(3)
         driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
         driver.find_element(By.XPATH, "//button[@type='submit' and contains(@class, 'btn-primary')]").click()
