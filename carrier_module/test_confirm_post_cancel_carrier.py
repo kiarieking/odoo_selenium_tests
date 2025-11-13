@@ -25,6 +25,7 @@ def test_confirm_order(driver,login,carrier_icon):
 def test_post_order(driver,login,carrier_icon):
     status = "Order"
     carrier_no = "CO03020"
+    login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
@@ -34,7 +35,8 @@ def test_post_order(driver,login,carrier_icon):
 @pytest.mark.order(9)
 def test_cancel_order(driver,login,carrier_icon):
     status = "Posted"
-    carrier_no = "CO01674" 
+    carrier_no = "CO01674"
+    login(EMAIL,PASSWORD) 
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
@@ -42,9 +44,10 @@ def test_cancel_order(driver,login,carrier_icon):
     time.sleep(2)
 
 @pytest.mark.order(10)
-def test_reset_order(driver,carrier_icon):
+def test_reset_order(driver,login,carrier_icon):
     status = "Cancelled"
     carrier_no = "CO12753"
+    login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
     open_order(driver,status,carrier_no)
