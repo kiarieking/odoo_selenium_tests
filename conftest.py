@@ -61,7 +61,7 @@ def carrier_icon(driver):
         env_path = find_dotenv(".env.icons_base64img")
         load_dotenv(env_path)
         icon_carrier = os.getenv("CARRIER")
-        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
         driver.find_element(By.XPATH,icon_carrier).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//li[@class='breadcrumb-item active' and text()='Carrier Quotations']")))
