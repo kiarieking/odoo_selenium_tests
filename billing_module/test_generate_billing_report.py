@@ -17,9 +17,9 @@ def test_generate_billing_report(driver,login,billing_icon):
     generate_report(driver)
     
 def generate_report(driver):
-        billing_report = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[normalize-space(text())='Billing Reports']")))
+        billing_report = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[@data-section="657"]')))
         billing_report.click()
-        billing_ledger = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[span[text()='Billing Ledger']]")))
+        billing_ledger = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@data-menu-xmlid="quatrix_billing_module.billing_ledger_menu"]')))
         billing_ledger.click()
         date_start = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "date_start")))
         date_start.click()
