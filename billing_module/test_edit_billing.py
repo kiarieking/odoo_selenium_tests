@@ -20,7 +20,7 @@ def test_edit_billing(driver,login,billing_icon):
     time.sleep(2)
 
 def open_bill(driver,bill_no):
-    invoiced_bills = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@data-menu-xmlid='quatrix_billing_module.orders_menu']")))
+    invoiced_bills = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//a[@data-menu-xmlid='quatrix_billing_module.orders_menu']")))
     invoiced_bills.click()
     bill_xpath = f"(.//*[normalize-space(text()) and normalize-space(.)='{bill_no}'])[1]/following::td[1]"
     bill = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, bill_xpath)))

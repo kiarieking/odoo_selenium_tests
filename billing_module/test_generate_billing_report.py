@@ -31,7 +31,7 @@ def generate_report(driver):
         select_end_date.click()
         carrier = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "carrier_id")))
         carrier.click()
-        select_carrier = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[@class='ui-menu-item-wrapper' and text()='ABDULAHI WALAIKA']")))
+        select_carrier = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[normalize-space(.)="ABDI MATANO WANJIRU"]')))
         select_carrier.click()
         generate_rpt_btn =WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='btn btn-primary' and span[text()='Generate Report']]")))
         generate_rpt_btn.click()

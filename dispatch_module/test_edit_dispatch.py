@@ -13,9 +13,10 @@ PASSWORD = os.getenv('PASSWORD')
 @pytest.mark.order(2)
 def test_edit_dispatch(driver,login,dispatch_icon):
     login(EMAIL,PASSWORD)
+    time.sleep(3)
     dispatch_icon()
     status = "Quotation"
-    dispatch_no = "DO10613"
+    dispatch_no = "DO11190"
     group_dispatch(driver)
     open_dispatch(driver,status,dispatch_no)
     start_editing_dispatch(driver)

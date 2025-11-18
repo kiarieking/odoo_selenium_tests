@@ -13,7 +13,7 @@ PASSWORD = os.getenv("PASSWORD")
 @pytest.mark.order(15)
 def test_confirm_dispatch(driver,login,dispatch_icon):
     status = "Quotation"
-    dispatch_no = "DO10604"
+    dispatch_no = "DO11192"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
