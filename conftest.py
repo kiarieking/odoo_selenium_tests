@@ -50,7 +50,7 @@ def dispatch_icon(driver):
         print(type(icon_dispatch))
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH, "//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
-        icon = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH, icon_dispatch)))
+        icon = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,"//a[@href='#menu_id=641&action=1044']")))
         icon.click()
         # driver.find_element(By.XPATH, icon_dispatch).click()
     return _dispatch_icon
@@ -64,7 +64,7 @@ def carrier_icon(driver):
         icon_carrier = os.getenv("CARRIER")
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
-        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,icon_carrier))).click()
+        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//a[@href='#menu_id=665&action=1071']"))).click()
         # driver.find_element(By.XPATH,icon_carrier).click()
         # WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//li[@class='breadcrumb-item active' and text()='Carrier Quotations']")))
         # assert "Carrier Quotations" in driver.page_source
@@ -79,7 +79,7 @@ def billing_icon(driver):
         burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
         # driver.find_element(By.XPATH, icon_billing).click()
-        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,icon_billing))).click()
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[@href='#menu_id=654&action=1058']"))).click()
         # WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[normalize-space()='Billing']")))
         # assert "Billing" in driver.page_source
     return _billing_icon
