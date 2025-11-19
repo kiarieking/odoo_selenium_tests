@@ -35,6 +35,7 @@ def login(driver):
         driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
         driver.find_element(By.XPATH, "//button[@type='submit' and contains(@class, 'btn-primary')]").click()
+        time.sleep(3)
     return _login
 
 @pytest.fixture
@@ -89,7 +90,8 @@ def fuel_icon(driver):
         env_path = find_dotenv(".env.icons_base64img")
         load_dotenv(env_path)  
         icon_fuel = os.getenv("FUEL")
-        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"(.//*[normalize-space(text()) and normalize-space(.)='Discuss'])[1]/preceding::a[1]")))
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
         burger.click()
-        driver.find_element(By.XPATH, icon_fuel).click()  
+        # driver.find_element(By.XPATH, icon_fuel).click()  
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,icon_fuel))).click()
     return _fuel_icon

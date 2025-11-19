@@ -16,7 +16,7 @@ def test_edit_voucher(driver,login,fuel_icon):
     fuel_icon()
     group_vouchers(driver)
     status = "Quotation"
-    voucher_no = "FO3930"
+    voucher_no = "FO3932"
     open_voucher(driver,status,voucher_no)
     edit_voucher(driver)
 
@@ -68,7 +68,7 @@ def edit_voucher(driver):
         unit_price.click()
         unit_price.clear()
         unit_price.send_keys('5')
-        save_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='btn btn-primary o_form_button_save' and @type='button' and @accesskey='s']")))
+        save_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space(.)='Save']")))
         save_btn.click()
         time.sleep(3)
     

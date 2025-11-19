@@ -10,15 +10,15 @@ load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
-# @pytest.mark.order(3)
-# def test_confirm_voucher(driver,login,fuel_icon):
-#     login(EMAIL,PASSWORD)
-#     fuel_icon()
-#     group_vouchers(driver)
-#     status = "Quotation"
-#     voucher_no = "FO3900"
-#     open_voucher(driver,status,voucher_no)
-#     confirm_voucher(driver)
+@pytest.mark.order(3)
+def test_confirm_voucher(driver,login,fuel_icon):
+    login(EMAIL,PASSWORD)
+    fuel_icon()
+    group_vouchers(driver)
+    status = "Quotation"
+    voucher_no = "FO3932"
+    open_voucher(driver,status,voucher_no)
+    confirm_voucher(driver)
 
 @pytest.mark.order(4)
 def test_post_voucher(driver,login,fuel_icon):
@@ -42,9 +42,9 @@ def test_cancel_voucher(driver,login,fuel_icon):
     
 
 def group_vouchers(driver):
-    group_by = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//i[@class='fa fa-bars']/following-sibling::span[text()='Group By']")))
+    group_by = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@class='dropdown-toggle btn btn-light ' and .//span[normalize-space()='Group By']]")))
     group_by.click()
-    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@aria-checked='false' and @role='menuitemcheckbox' and text()='Status']")))
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
     status.click()
 
 def open_voucher(driver,status,voucher_no):

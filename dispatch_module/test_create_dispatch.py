@@ -13,7 +13,6 @@ PASSWORD = os.getenv('PASSWORD')
 @pytest.mark.order(1)
 def test_create_dispatch(driver,login,dispatch_icon):
     login(EMAIL,PASSWORD)
-    time.sleep(3)
     dispatch_icon()
     open_new_dispatch(driver)
     add_shipper(driver)
