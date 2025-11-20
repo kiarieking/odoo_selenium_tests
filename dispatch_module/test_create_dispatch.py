@@ -45,7 +45,7 @@ def add_product_line(driver):
     product_input.click()
     product = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.LINK_TEXT, "[KEDA] CHAVAKALI 28T")))
     product.click()
-    delivery_no = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "order_no")))
+    delivery_no = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME, "order_no")))
     delivery_no.send_keys("123_test")
     description = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "description")))
     description.send_keys("test description")
@@ -64,6 +64,9 @@ def add_product_line(driver):
     save_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='d-none d-sm-inline' and normalize-space(text())='Save']")))
     save_btn.click()
     time.sleep(3)
+
+
+    
 
 
 

@@ -24,7 +24,7 @@ def test_confirm_dispatch(driver,login,dispatch_icon):
 @pytest.mark.order(16)
 def test_post_dispatch(driver,login,dispatch_icon):
     status = "Dispatch Order"
-    dispatch_no = "DO7527"
+    dispatch_no = "DO7528"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)
@@ -34,7 +34,7 @@ def test_post_dispatch(driver,login,dispatch_icon):
 @pytest.mark.order(17)
 def test_cancel_dispatch(driver, login, dispatch_icon):
     status = "Posted"
-    dispatch_no = "DO9988"
+    dispatch_no = "DO9987"
     login(EMAIL,PASSWORD)
     dispatch_icon()
     group_dispatch(driver)

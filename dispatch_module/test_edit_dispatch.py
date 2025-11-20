@@ -17,7 +17,7 @@ def test_edit_dispatch(driver,login,dispatch_icon):
     time.sleep(3)
     dispatch_icon()
     status = "Quotation"
-    dispatch_no = "DO11190"
+    dispatch_no = "DO11192"
     group_dispatch(driver)
     open_dispatch(driver,status,dispatch_no)
     start_editing_dispatch(driver)
@@ -62,20 +62,13 @@ def edit_vehicle(driver):
     time.sleep(2)
 
 def edit_product_line(driver):
-    add_line = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.LINK_TEXT, "Add a line")))
-    add_line.click()
+    # add_line = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.LINK_TEXT, "Add a line")))
+    # add_line.click()
     product_input = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//div[@name='product_id']//input[contains(@class,'ui-autocomplete-input')]")))
     product_input.click()
     product = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, '//a[normalize-space()="[KEDA] BUNGOMA 28T"]')))
     product.click()
-    time.sleep(3)
-    row = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "//tr[@data-id='quatrix.dispatch.line_12']"))
-)
-    row.click()  # Ensures the row is active and inputs become editable
-  
-
-    delivery_no = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME, "order_no")))
+    delivery_no = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='order_no' and @type='text' and contains(@class, 'o_quick_editable')]")))
     delivery_no.send_keys("edit")   
     description = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "description")))
     description.click()
@@ -83,6 +76,7 @@ def edit_product_line(driver):
     narration = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "notes")))
     narration.click()
     narration.send_keys("edit narration")
+    time.sleep(3)
     quantity = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "quantity")))
     quantity.click()
     quantity.send_keys("2")
@@ -90,7 +84,6 @@ def edit_product_line(driver):
     unit_price.click()
     unit_price.send_keys("50")
     carrier_charge = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.NAME, "carrier_price")))
-    
     carrier_charge.send_keys("200")
     save_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='d-none d-sm-inline' and normalize-space(text())='Save']")))
     save_btn.click()
