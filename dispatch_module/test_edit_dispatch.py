@@ -64,9 +64,10 @@ def edit_vehicle(driver):
 def edit_product_line(driver):
     # add_line = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.LINK_TEXT, "Add a line")))
     # add_line.click()
-    product_input = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//div[@name='product_id']//input[contains(@class,'ui-autocomplete-input')]")))
+    product_input = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//td[@name='product_id' and contains(@class, 'o_list_many2one')]")))
     product_input.click()
-    product = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, '//a[normalize-space()="[KEDA] BUNGOMA 28T"]')))
+    product_input.click()
+    product = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, '//a[normalize-space()="[KEDA] BONDO 28T"]')))
     product.click()
     delivery_no = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='order_no' and @type='text' and contains(@class, 'o_quick_editable')]")))
     delivery_no.send_keys("edit")   
