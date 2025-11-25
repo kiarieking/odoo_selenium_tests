@@ -14,6 +14,18 @@ PASSWORD = os.getenv("PASSWORD")
 def test_confirm_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
+    open_invoices(driver)
+    group_invoices(driver)
+    time.sleep(3)
+
+def open_invoices(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
     customers_btn.click()
-    time.sleep(3)
+    invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
+    invoices.click()
+
+def group_invoices(driver):
+    group_by = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Group By']")))
+    group_by.click()
+    status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='Status']")))
+    status.click()
