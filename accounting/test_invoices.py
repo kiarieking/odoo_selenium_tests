@@ -14,10 +14,13 @@ PASSWORD = os.getenv("PASSWORD")
 def test_confirm_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    open_invoices(driver) 
+    group_invoices(driver)
+    status = "Draft"
+    invoice_no = "INV/2023/1763"
+    open_invoices(driver,status,invoice_no) 
     time.sleep(3)
 
-def open_invoices(driver):
+def group_invoices(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
     customers_btn.click()
     invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
@@ -33,8 +36,10 @@ def open_invoices(driver):
     status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
     status.click()
 
-# def group_invoices(driver):
-#     group_by = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[@class='o_dropdown_title' and normalize-space()='Group By']")))
-#     group_by.click()
-#     status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
-#     status.click()
+def open_invoices(driver,status,invoice_no):
+    status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+    invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+    invoice_grp.click()
+    invoice_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
+    invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
+    invoice.click()
