@@ -95,3 +95,11 @@ def fuel_icon(driver):
         # driver.find_element(By.XPATH, icon_fuel).click()  
         WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[@href='#menu_id=660&action=1065']"))).click()
     return _fuel_icon
+
+@pytest.fixture
+def accounting_icon(driver):
+    def _accounting_icon():
+        burger = WebDriverWait(driver,60).until(EC.presence_of_element_located((By.XPATH,"//button[@title='Home Menu' and @data-hotkey='h' and .//i[contains(@class,'fa-th')]]")))
+        burger.click()
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//a[@href='#menu_id=509&action=949']"))).click()
+    return _accounting_icon
