@@ -18,6 +18,7 @@ def test_confirm_invoice(driver,login,accounting_icon):
     status = "Draft"
     invoice_no = "INV/2023/1763"
     open_invoices(driver,status,invoice_no) 
+    confirm_invoice(driver)
     time.sleep(3)
 
 def group_invoices(driver):
@@ -43,3 +44,12 @@ def open_invoices(driver,status,invoice_no):
     invoice_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
     invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
     invoice.click()
+
+def confirm_invoice(driver):
+    confirm_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[normalize-space()='Confirm']]")))
+    confirm_btn.click()
+    time.sleep(2)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//div[@name='state']//button[@aria-checked='true']/@data-value")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
+    time.sleep(3)
