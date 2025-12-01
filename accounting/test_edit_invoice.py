@@ -73,3 +73,5 @@ def edit_invoice_line(driver):
     edit_btn.click()
     line_row = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//tr[.//span[contains(@class,'o_tag_badge_text') and text()='VAT']]")))
     line_row.click()
+    product_line = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[contains(@class,'o_input_dropdown')]//input[contains(@class,'ui-autocomplete-input')]")))
+    product_line.click()
