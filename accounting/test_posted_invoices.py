@@ -20,6 +20,16 @@ def test_payment_invoice(driver,login,accounting_icon):
     open_invoices(driver,status,invoice_no)
     make_payment(driver)
 
+@pytest.mark.order(23)
+def test_add_credit_note(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    group_invoices(driver)
+    status = "Posted"
+    invoice_no = "INV/2025/0708"
+    open_invoices(driver,status,invoice_no)
+    add_creditnote(driver)
+
 def group_invoices(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
     customers_btn.click()
@@ -49,4 +59,11 @@ def make_payment(driver):
     register_payment_btn.click()
     create_payment_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_create_payments")))
     create_payment_btn.click()
+    time.sleep(3)
+
+def add_creditnote(driver):
+    add_creditnote_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_reverse")))
+    add_creditnote_btn.click()
+    refund_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//label[normalize-space()='Full Refund']/preceding-sibling::input[@type='radio']")))
+    refund_btn.click()
     time.sleep(3)
