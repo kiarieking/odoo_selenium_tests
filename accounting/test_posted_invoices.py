@@ -9,3 +9,44 @@ import os
 load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
+
+@pytest.mark.order(22)
+def test_payment_invoice(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    group_invoices(driver)
+    status = "Posted"
+    invoice_no = "INV/2025/0708"
+    open_invoices(driver,status,invoice_no)
+    make_payment(driver)
+
+def group_invoices(driver):
+    customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
+    customers_btn.click()
+    invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
+    invoices.click()
+    WebDriverWait(driver,15).until(
+        EC.visibility_of_element_located(
+            (By.XPATH, "//li[contains(@class,'breadcrumb-item') and contains(@class,'active')]//span[normalize-space()='Invoices']")
+        )
+    )
+
+    group_by = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[@class='o_dropdown_title' and normalize-space()='Group By']")))
+    group_by.click()
+    status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
+    status.click()
+
+def open_invoices(driver,status,invoice_no):
+    status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+    invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+    invoice_grp.click()
+    invoice_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
+    invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
+    invoice.click()
+
+def make_payment(driver):
+    register_payment_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_register_payment")))
+    register_payment_btn.click()
+    create_payment_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_create_payments")))
+    create_payment_btn.click()
+    time.sleep(3)
