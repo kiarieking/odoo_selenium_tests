@@ -26,7 +26,7 @@ def test_add_credit_note(driver,login,accounting_icon):
     accounting_icon()
     group_invoices(driver)
     status = "Posted"
-    invoice_no = "INV/2025/0708"
+    invoice_no = "INV/2025/0706"
     open_invoices(driver,status,invoice_no)
     add_creditnote(driver)
 
@@ -64,6 +64,8 @@ def make_payment(driver):
 def add_creditnote(driver):
     add_creditnote_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_reverse")))
     add_creditnote_btn.click()
-    refund_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//label[normalize-space()='Full Refund']/preceding-sibling::input[@type='radio']")))
+    refund_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//label[normalize-space()='Full Refund']")))
     refund_btn.click()
+    reverse_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"reverse_moves")))
+    reverse_btn.click()
     time.sleep(3)
