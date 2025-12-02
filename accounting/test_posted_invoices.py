@@ -30,6 +30,16 @@ def test_add_credit_note(driver,login,accounting_icon):
     open_invoices(driver,status,invoice_no)
     add_creditnote(driver)
 
+@pytest.mark.order(24)
+def test_send_print_invoice(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    group_invoices(driver)
+    status = "Posted"
+    invoice_no = "INV/2025/0706"
+    open_invoices(driver,status,invoice_no)
+    send_print_invoice(driver)
+
 def group_invoices(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
     customers_btn.click()
@@ -69,3 +79,9 @@ def add_creditnote(driver):
     reverse_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"reverse_moves")))
     reverse_btn.click()
     time.sleep(3)
+
+def send_print_invoice(driver):
+    send_print_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_invoice_sent")))
+    send_print_btn.click()
+    send_invoice_txt = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//h4[normalize-space()='Send Invoice']")))
+    assert send_invoice_txt.is_displayed
