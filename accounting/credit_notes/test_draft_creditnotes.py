@@ -20,7 +20,7 @@ def test_confirm_creditnote(driver,login,accounting_icon):
     open_creditnote(driver,status,invoice_no)
     confirm_creditnote(driver)
 
-@pytest.mark.order(25)
+@pytest.mark.order(26)
 def test_cancel_creditnote(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
@@ -29,6 +29,16 @@ def test_cancel_creditnote(driver,login,accounting_icon):
     invoice_no = "RINV/2025/0016"
     open_creditnote(driver,status,invoice_no)
     cancel_creditnote(driver)
+
+@pytest.mark.order(27)
+def test_reset_creditnote(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    group_creditnote(driver)
+    status = "Cancelled"
+    invoice_no = "RINV/2023/0038"
+    open_creditnote(driver,status,invoice_no)
+    reset_creditnote(driver)
 
 def group_creditnote(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
@@ -68,5 +78,13 @@ def cancel_creditnote(driver):
     cancel_btn.click()
     time.sleep(3)
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='cancel']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
+
+def reset_creditnote(driver):
+    cancel_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[normalize-space()='Reset to Draft']]")))
+    cancel_btn.click()
+    time.sleep(3)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='draft']")))
     title = status.get_attribute("title")
     assert title == "Current state"
