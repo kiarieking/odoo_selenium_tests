@@ -18,6 +18,7 @@ def test_confirm_creditnote(driver,login,accounting_icon):
     status = "Draft"
     invoice_no = "RINV/2025/0016"
     open_creditnote(driver,status,invoice_no)
+    confirm_creditnote(driver)
 
 def group_creditnote(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
@@ -40,7 +41,14 @@ def open_creditnote(driver,status,invoice_no):
     invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
     invoice_grp.click()
     invoice_xpath = f"//td[normalize-space()='{invoice_no}']"
-
     invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
     invoice.click()
+    
+
+def confirm_creditnote(driver):
+    confirm_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[normalize-space()='Confirm']]")))
+    confirm_btn.click()
     time.sleep(3)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='posted']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"
