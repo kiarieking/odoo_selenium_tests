@@ -40,6 +40,16 @@ def test_reset_creditnote(driver,login,accounting_icon):
     open_creditnote(driver,status,invoice_no)
     reset_creditnote(driver)
 
+@pytest.mark.order(26)
+def test_preview_creditnote(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    group_creditnote(driver)
+    status = "Draft"
+    invoice_no = "RINV/2023/0058"
+    open_creditnote(driver,status,invoice_no)
+    preview_creditnote(driver)
+
 def group_creditnote(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
     customers_btn.click()
@@ -88,3 +98,13 @@ def reset_creditnote(driver):
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='draft']")))
     title = status.get_attribute("title")
     assert title == "Current state"
+
+def preview_creditnote(driver):
+    preview_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[@name='preview_invoice' and @title='Preview invoice']")))
+    preview_btn.click()
+    WebDriverWait(driver,10).until(
+    EC.presence_of_all_elements_located((
+        By.XPATH, 
+        "//a[contains(@class,'o_download_btn')] | //a[contains(@class,'o_portal_invoice_print')] | //div[contains(.,'This is a preview of the customer portal')]"
+    ))
+    )
