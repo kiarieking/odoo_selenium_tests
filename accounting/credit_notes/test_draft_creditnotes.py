@@ -16,7 +16,7 @@ def test_confirm_creditnote(driver,login,accounting_icon):
     accounting_icon()
     group_creditnote(driver)
     status = "Draft"
-    invoice_no = "RINV/2025/0014"
+    invoice_no = "RINV/2025/0016"
     open_creditnote(driver,status,invoice_no)
 
 def group_creditnote(driver):
@@ -39,7 +39,8 @@ def open_creditnote(driver,status,invoice_no):
     status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
     invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
     invoice_grp.click()
-    invoice_xpath = "//td[contains(@class,'o_data_cell') and @title='RINV/2025/0016']"
+    invoice_xpath = f"//td[normalize-space()='{invoice_no}']"
 
     invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
     invoice.click()
+    time.sleep(3)
