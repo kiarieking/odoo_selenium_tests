@@ -36,7 +36,7 @@ pipeline{
 
                     pytest -q --tb=short authentication
 
-                    echo "I'm here 2. installed dotenv manually. exited session"
+                    echo "I'm here 2. installed dotenv manually. exited session2"
 
                 '''
             }
