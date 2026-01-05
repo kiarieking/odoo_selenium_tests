@@ -18,29 +18,18 @@ def test_edit_dispatch(driver,login,dispatch_icon):
     dispatch_icon()
     status = "Quotation"
     group_dispatch(driver)
-    dispatch_no = get_dispatch_no(driver)
-    open_dispatch(driver,status,dispatch_no)
+    open_dispatch(driver,status)
     start_editing_dispatch(driver)
     edit_shipper(driver)
     edit_vehicle(driver)
     edit_product_line(driver)
 
 
-def get_dispatch_no(driver):
-    dispatch = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"(//tr[contains(@class,'o_data_row') and not(contains(@style,'display: none'))])[1]//td[@name='name']")))
-    dispatch_no = dispatch.text.strip()
-    print (dispatch_no)
-    return dispatch_no
-
 def group_dispatch(driver):
-    table = driver.find_element(By.XPATH, "//table")
-    # apply filter here
-    WebDriverWait(driver, 10).until(EC.staleness_of(table))
     group_by = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@class='dropdown-toggle btn btn-light ' and .//span[normalize-space()='Group By']]")))
     group_by.click()
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
     status.click()
-    # time.sleep(3)
 
 
 def open_dispatch(driver,status):
