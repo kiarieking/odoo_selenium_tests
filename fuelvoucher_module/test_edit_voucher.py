@@ -31,7 +31,7 @@ def open_voucher(driver,status,voucher_no):
     status_xpath = f"//th[@class='o_group_name' and contains(., '{status}')]"
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, status_xpath)))
     status.click()
-    voucher_xpath = f"(.//*[normalize-space(text()) and normalize-space(.)='{voucher_no}'])[1]/following::td[1]"
+    voucher_xpath = "//tbody/tr[contains(@class,'o_data_row')][1]"
     voucher = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, voucher_xpath)))
     voucher.click()
     time.sleep(3)
