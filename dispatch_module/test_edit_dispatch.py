@@ -17,9 +17,8 @@ def test_edit_dispatch(driver,login,dispatch_icon):
     time.sleep(3)
     dispatch_icon()
     status = "Quotation"
-    dispatch_no = "DO11192"
     group_dispatch(driver)
-    open_dispatch(driver,status,dispatch_no)
+    open_dispatch(driver,status)
     start_editing_dispatch(driver)
     edit_shipper(driver)
     edit_vehicle(driver)
@@ -31,14 +30,13 @@ def group_dispatch(driver):
     group_by.click()
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
     status.click()
-    # time.sleep(3)
 
 
-def open_dispatch(driver,status,dispatch_no):
+def open_dispatch(driver,status):
     status_xpath = f"//th[@class='o_group_name' and contains(., '{status}')]"
     status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, status_xpath)))
     status.click()
-    dispatch_xpath = f"(.//*[normalize-space(text()) and normalize-space(.)='{dispatch_no}'])[1]/following::td[1]"
+    dispatch_xpath = "//tbody/tr[contains(@class,'o_data_row')][1]"
     dispatch = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, dispatch_xpath)))
     dispatch.click()
     # time.sleep(3)

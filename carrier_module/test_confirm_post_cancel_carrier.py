@@ -17,7 +17,7 @@ def test_confirm_order(driver,login,carrier_icon):
     login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
-    open_order(driver,status,carrier_no)
+    open_order(driver,status)
     confirm_order(driver)
     time.sleep(2)
 
@@ -28,7 +28,7 @@ def test_post_order(driver,login,carrier_icon):
     login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
-    open_order(driver,status,carrier_no)
+    open_order(driver,status)
     post_order(driver)
     time.sleep(2)
 
@@ -39,7 +39,7 @@ def test_cancel_order(driver,login,carrier_icon):
     login(EMAIL,PASSWORD) 
     carrier_icon()
     group_orders(driver)
-    open_order(driver,status,carrier_no)
+    open_order(driver,status)
     cancel_order(driver)
     time.sleep(2)
 
@@ -50,7 +50,7 @@ def test_reset_order(driver,login,carrier_icon):
     login(EMAIL,PASSWORD)
     carrier_icon()
     group_orders(driver)
-    open_order(driver,status,carrier_no)
+    open_order(driver,status)
     reset_order(driver)
     time.sleep(2)
 
@@ -60,11 +60,12 @@ def group_orders(driver):
     status = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
     status.click()
 
-def open_order(driver,status,carrier_no):
+def open_order(driver,status):
     status_xpath = f"//th[@class='o_group_name' and contains(., '{status}')]"
     quotation = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, status_xpath)))
     quotation.click()
-    order_xpath = f"(.//*[normalize-space(text()) and normalize-space(.)='{carrier_no}'])[1]/following::td[1]"
+    # order_xpath = f"(.//*[normalize-space(text()) and normalize-space(.)='{carrier_no}'])[1]/following::td[1]"
+    order_xpath = "//tbody/tr[contains(@class,'o_data_row')][1]"
     element = WebDriverWait(driver,100).until(EC.element_to_be_clickable((By.XPATH, order_xpath)))
     element.click()
 
