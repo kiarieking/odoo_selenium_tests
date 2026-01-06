@@ -15,12 +15,13 @@ import time
 @pytest.fixture(scope='function')
 def driver():
     service = Service('/usr/bin/chromedriver')
-    temp_profile = tempfile.mkdtemp()
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument(f"--user-data-dir={temp_profile}")
+    options.add_argument("--disable-gpu")
+    # tmp_profile_dir = "~/.config/google-chrome"
+    # options.add_argument(f"--user-data-dir={tmp_profile_dir}")
     driver = webdriver.Chrome(service=service,options=options)
     yield driver
     driver.quit()
@@ -32,7 +33,9 @@ def login(driver):
         URL = os.getenv('URL')
         driver.get(URL)
         time.sleep(3)
-        driver.find_element(By.ID, "login").send_keys(email)
+        login_input = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,"login")))
+        login_input.send_keys(email)
+        # driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
         driver.find_element(By.XPATH, "//button[@type='submit' and contains(@class, 'btn-primary')]").click()
         time.sleep(3)

@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-@pytest.fixture
+
 def login(driver):
     def _login(email,password):
         driver.get('https://sandbox.erp.quatrixglobal.com/')
@@ -26,8 +26,8 @@ def logout(driver):
     
 def test_valid_login(driver, login):
     login("kelvin.kiarie@quatrixglobal.com", "$kingara120")
-    WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@class='o_menu_brand' and normalize-space()='Discuss']")))
-    assert "Discuss" in driver.page_source
+    discuss = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@data-menu-xmlid='mail.menu_root_discuss']")))
+    assert "Discuss" in discuss.text.strip()
     logout(driver)
     time.sleep(3)
     
