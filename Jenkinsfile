@@ -46,7 +46,10 @@ pipeline{
             steps{
                 sh '''
 
-                    ssh kkiarie@sandbox.erp.quatrixglobal.com
+                    ssh -tt \
+                    -o StrictHostKeyChecking=no \
+                    -o UserKnownHostsFile=/dev/null \
+                    kkiarie@sandbox.erp.quatrixglobal.com
 
                     touch /tmp/test_jenkins.txt
 
