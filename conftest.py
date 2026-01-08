@@ -22,7 +22,7 @@ def driver():
     options.add_argument("--disable-gpu")
     # tmp_profile_dir = "~/.config/google-chrome"
     # options.add_argument(f"--user-data-dir={tmp_profile_dir}")
-    driver = webdriver.Chrome(service=service,options=options)
+    driver = webdriver.Chrome(service=service)
     yield driver
     driver.quit()
     
@@ -31,6 +31,7 @@ def login(driver):
     def _login(email,password):
         load_dotenv()
         URL = os.getenv('URL')
+        print(URL + " " + type(URL))
         driver.get(URL)
         time.sleep(3)
         login_input = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,"login")))
