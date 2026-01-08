@@ -51,7 +51,7 @@ pipeline{
                     -o UserKnownHostsFile=/dev/null \
                     kkiarie@sandbox.erp.quatrixglobal.com
 
-                    touch /tmp/test_jenkinsfile.txt
+                    touch /tmp/test_jenkinsfile2.txt
 
 
                 '''
