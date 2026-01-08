@@ -36,7 +36,7 @@ pipeline{
 
                     pytest -q --tb=short authentication/test_login.py::test_valid_login
 
-                    echo "I'm here 2. installed dotenv manually. exited session2"
+                    echo "I'm here testing deployment stage"
 
                 '''
             }
