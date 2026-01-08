@@ -36,7 +36,7 @@ pipeline{
 
                     pytest -q --tb=short authentication/test_login.py::test_valid_login
 
-                    echo "I'm here testing deployment stage"
+                    echo "Added .env to staging"
 
                 '''
             }
