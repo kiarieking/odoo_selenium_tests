@@ -34,14 +34,29 @@ pipeline{
                     
                     . venv/bin/activate
 
-                    pytest -q --tb=short authentication
+                    pytest -q --tb=short authentication/test_login.py::test_valid_login
 
                     echo "I'm here 2. installed dotenv manually. exited session2"
 
                 '''
             }
         }
+
+        stage("Deploy changes"){
+            steps{
+                sh '''
+
+                    ssh kkiarie@sandbox.erp.quatrixglobal.com
+
+                    touch /tmp/test_jenkins.txt
+
+
+                '''
+            }
+        }
     }
+
+    
     post{
         always{
             echo "========Build done========"
