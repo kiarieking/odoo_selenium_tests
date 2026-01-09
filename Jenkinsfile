@@ -48,7 +48,7 @@ pipeline{
 
                     ssh -tt kkiarie@sandbox.erp.quatrixglobal.com << EOF
 
-                    touch /tmp/test_jenkinsfile2.txt
+                    touch /tmp/test_jenkinsfile22.txt
 
 
                 '''
