@@ -50,7 +50,9 @@ pipeline{
 
                     mkdir /tmp/jenkinstest
 
+                    exit
 
+                    EOF
                 '''
             }
         }
