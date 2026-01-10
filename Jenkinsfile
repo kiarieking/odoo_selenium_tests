@@ -50,7 +50,13 @@ pipeline{
 
                     whoami
 
-                    sudo systemctl status odoo15
+                    sudo systemctl stop odoo15
+
+                    cd /opt/odoo15
+
+                    pyenv activate odoo15env
+
+                    ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module
 
                     exit
 
