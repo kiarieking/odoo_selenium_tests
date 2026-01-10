@@ -54,12 +54,7 @@ pipeline{
 
                     cd /opt/odoo15
 
-                    export PYENV_ROOT=\"$HOME/.pyenv\"
-                    export PATH=\"$PYENV_ROOT/bin:$PATH\"
-                    eval \"$(pyenv init -)\"
-                    pyenv activate odoo15env
-
-                    ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module
+                    /home/kkiarie/.pyenv/versions/odoo15env/bin/python3 ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module
 
                     sudo systemctl start odoo15
 
