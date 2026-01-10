@@ -46,7 +46,7 @@ pipeline{
             steps{
                 sh '''
 
-                    ssh -tt kkiarie@sandbox.erp.quatrixglobal.com << EOF
+                    ssh kkiarie@sandbox.erp.quatrixglobal.com << EOF
 
                     whoami
 
