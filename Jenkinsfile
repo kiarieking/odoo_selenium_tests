@@ -50,6 +50,8 @@ pipeline{
 
                     whoami
 
+                    echo $HOME
+
                     exit
 
                     EOF
