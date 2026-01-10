@@ -61,6 +61,8 @@ pipeline{
 
                     ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module
 
+                    sudo systemctl start odoo15
+                    
                     exit
 
                     EOF
