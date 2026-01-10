@@ -50,7 +50,7 @@ pipeline{
 
                     whoami
 
-                    echo $HOME
+                    sudo systemctl status odoo15
 
                     exit
 
