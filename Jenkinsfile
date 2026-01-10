@@ -36,7 +36,7 @@ pipeline{
 
                     pytest -q --tb=short authentication/test_login.py::test_valid_login
 
-                    echo "Go to update staging now again"
+                    echo "Go to update staging now with virtualenv updated"
 
                 '''
             }
