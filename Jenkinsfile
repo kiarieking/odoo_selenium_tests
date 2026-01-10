@@ -36,7 +36,7 @@ pipeline{
 
                     pytest -q --tb=short authentication/test_login.py::test_valid_login
 
-                    echo "Added .env to staging"
+                    echo "Go to update staging now"
 
                 '''
             }
@@ -62,7 +62,7 @@ pipeline{
                     ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module
 
                     sudo systemctl start odoo15
-                    
+
                     exit
 
                     EOF
