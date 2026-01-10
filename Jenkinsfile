@@ -48,7 +48,7 @@ pipeline{
 
                     ssh -tt kkiarie@sandbox.erp.quatrixglobal.com << EOF
 
-                    mkdir /tmp/jenkinstest
+                    mkdir /tmp/jenkinstest2
 
                     exit
 
