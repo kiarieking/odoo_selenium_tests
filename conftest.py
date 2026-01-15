@@ -7,10 +7,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv, find_dotenv
+from pathlib import Path
 import os
 import tempfile
 import base64
 import time
+
+load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
 
 @pytest.fixture(scope='function')
 def driver():
@@ -22,14 +25,14 @@ def driver():
     options.add_argument("--disable-gpu")
     # tmp_profile_dir = "~/.config/google-chrome"
     # options.add_argument(f"--user-data-dir={tmp_profile_dir}")
-    driver = webdriver.Chrome(service=service,options=options)
+    driver = webdriver.Chrome(service=service)
     yield driver
     driver.quit()
-    
+
 @pytest.fixture(scope="function")
 def login(driver):
     def _login(email,password):
-        load_dotenv()
+        # load_dotenv()
         URL = os.getenv('URL')
         print(URL)
         print(type(URL))
