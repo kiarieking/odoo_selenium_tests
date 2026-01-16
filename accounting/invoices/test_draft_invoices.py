@@ -71,13 +71,6 @@ def open_invoices(driver,status):
             (By.XPATH, "//tbody//tr[contains(@class,'o_data_row')]")
         )
     )
-    # invoice_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
-    # invoice_xpath = (
-    #     "(//tbody//tr[contains(@class,'o_data_row')]"
-    #     "//td[@name='name'])[1]"
-    # )
-    # invoice = WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.XPATH,invoice_xpath)))
-    # invoice.click()
 
     first_invoice_xpath = (
         "(//tbody//tr[contains(@class,'o_data_row')]"
