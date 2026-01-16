@@ -88,17 +88,18 @@ def open_invoices(driver,status):
     invoice = wait.until(
         EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
     )
+    invoice.click()
 
     # Scroll into view (critical for Odoo)
-    driver.execute_script(
-        "arguments[0].scrollIntoView({block:'center'});", invoice
-    )
+    #driver.execute_script(
+        # "arguments[0].scrollIntoView({block:'center'});", invoice
+    # )
 
     # Click with JS fallback
-    try:
-        invoice.click()
-    except Exception:
-        driver.execute_script("arguments[0].click();", invoice)
+    # try:
+    #     invoice.click()
+    # except Exception:
+    #     driver.execute_script("arguments[0].click();", invoice)
 
 def confirm_invoice(driver):
     confirm_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[normalize-space()='Confirm']]")))
