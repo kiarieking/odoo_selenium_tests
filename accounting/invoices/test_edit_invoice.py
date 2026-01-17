@@ -135,7 +135,7 @@ def edit_invoice_details(driver):
 def edit_invoice_line(driver):
     wait = WebDriverWait(driver, 15)
 
-    # Click Edit
+    # Click Edit button
     wait.until(EC.element_to_be_clickable((
         By.XPATH, "//button[contains(@class,'o_form_button_edit')]"
     ))).click()
@@ -143,38 +143,36 @@ def edit_invoice_line(driver):
     # First product cell
     product_cell = wait.until(EC.element_to_be_clickable((
         By.XPATH,
-        "(//tbody[contains(@class,'ui-sortable')]"
-        "//tr[contains(@class,'o_data_row')])[1]"
+        "(//tbody[contains(@class,'ui-sortable')]//tr[contains(@class,'o_data_row')])[1]"
         "//td[@name='product_id']"
     )))
 
-    # Activate inline editor
-    ActionChains(driver).double_click(product_cell).perform()
+    # Scroll into view and double-click only (avoid direct click)
+    driver.execute_script("arguments[0].scrollIntoView(true);", product_cell)
+    ActionChains(driver).move_to_element(product_cell).double_click(product_cell).perform()
 
-    # Type product name
-    ActionChains(driver)\
-        .send_keys(Keys.CONTROL, "a")\
-        .send_keys(Keys.DELETE)\
-        .send_keys("KAPSABET")\
-        .perform()
+    # Brief pause for JS editor
+    time.sleep(0.3)
 
-    # 🔥 TRIGGER dropdown (this is what you were missing)
+    # Type the product name
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.CONTROL, "a")
+    actions.send_keys(Keys.DELETE)
+    actions.send_keys("KAPSABET")
+    actions.perform()
+
+    # Trigger dropdown
     ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
 
-    # 🔥 NOW wait for dropdown
-    # wait.until(EC.presence_of_element_located((
-    #     By.XPATH, "//ul[contains(@class,'ui-autocomplete')]//li"
-    # )))
+    # Wait for dropdown items
+    wait.until(EC.presence_of_element_located((
+        By.XPATH, "//ul[contains(@class,'ui-autocomplete')]//li"
+    )))
 
-    # Select first option + commit
-    ActionChains(driver)\
-        .send_keys(Keys.ENTER)\
-        .send_keys(Keys.TAB)\
-        .perform()
+    # Select first item and commit
+    ActionChains(driver).send_keys(Keys.ENTER).send_keys(Keys.TAB).perform()
 
     # Save invoice
     wait.until(EC.element_to_be_clickable((
         By.XPATH, "//button[contains(@class,'o_form_button_save')]"
     ))).click()
-
-
