@@ -103,26 +103,78 @@ def edit_invoice_details(driver):
     save_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']")))
     save_btn.click()
 
-def edit_invoice_line(driver):
-    edit_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
-    edit_btn.click()
+# def edit_invoice_line(driver):
+#     edit_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
+#     edit_btn.click()
 
-    wait = WebDriverWait(driver, 10)
-    product_cell_xpath = (
+#     wait = WebDriverWait(driver, 10)
+#     product_cell_xpath = (
+#         "(//tbody[contains(@class,'ui-sortable')]"
+#         "//tr[contains(@class,'o_data_row')])[1]"
+#         "//td[@name='product_id']"
+#     )
+
+#     cell = wait.until(EC.element_to_be_clickable((By.XPATH, product_cell_xpath)))
+
+#     # Activate editor
+#     ActionChains(driver).double_click(cell).perform()
+#     time.sleep(3)
+#     ActionChains(driver)\
+#         .send_keys(Keys.CONTROL, "a")\
+#         .send_keys("MIWANI")\
+#         .send_keys(Keys.ENTER)\
+#         .perform()
+
+#     time.sleep(3)
+
+#     save_btn = wait.until(EC.element_to_be_clickable((
+#     By.XPATH, "//button[contains(@class,'o_form_button_save')]"
+# )))
+#     save_btn.click()
+
+def edit_invoice_line(driver):
+    wait = WebDriverWait(driver, 15)
+
+    # Click Edit
+    wait.until(EC.element_to_be_clickable((
+        By.XPATH, "//button[contains(@class,'o_form_button_edit')]"
+    ))).click()
+
+    # First product cell
+    product_cell = wait.until(EC.element_to_be_clickable((
+        By.XPATH,
         "(//tbody[contains(@class,'ui-sortable')]"
         "//tr[contains(@class,'o_data_row')])[1]"
         "//td[@name='product_id']"
-    )
+    )))
 
-    cell = wait.until(EC.element_to_be_clickable((By.XPATH, product_cell_xpath)))
+    # Activate inline editor
+    ActionChains(driver).double_click(product_cell).perform()
 
-    # Activate editor
-    ActionChains(driver).double_click(cell).perform()
-
+    # Type product name
     ActionChains(driver)\
         .send_keys(Keys.CONTROL, "a")\
-        .send_keys("MIWANI")\
-        .send_keys(Keys.ENTER)\
+        .send_keys(Keys.DELETE)\
+        .send_keys("KAPSABET")\
         .perform()
 
-    time.sleep(3)
+    # 🔥 TRIGGER dropdown (this is what you were missing)
+    ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+
+    # 🔥 NOW wait for dropdown
+    # wait.until(EC.presence_of_element_located((
+    #     By.XPATH, "//ul[contains(@class,'ui-autocomplete')]//li"
+    # )))
+
+    # Select first option + commit
+    ActionChains(driver)\
+        .send_keys(Keys.ENTER)\
+        .send_keys(Keys.TAB)\
+        .perform()
+
+    # Save invoice
+    wait.until(EC.element_to_be_clickable((
+        By.XPATH, "//button[contains(@class,'o_form_button_save')]"
+    ))).click()
+
+
