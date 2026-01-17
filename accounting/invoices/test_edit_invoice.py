@@ -2,6 +2,8 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 import pytest
 from dotenv import load_dotenv
 import os
@@ -62,7 +64,7 @@ def open_invoices(driver,status):
         "//td[@name='name'])[1]"
     )
 
-    # WAIT: element is visible (NOT clickable)
+    # WAIT: element is visibfrom selenium.webdriver.common.keys import Keysle (NOT clickable)
     invoice = wait.until(
         EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
     )
@@ -104,7 +106,23 @@ def edit_invoice_details(driver):
 def edit_invoice_line(driver):
     edit_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
     edit_btn.click()
-    line_row = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//tr[.//span[contains(@class,'o_tag_badge_text') and text()='VAT']]")))
-    line_row.click()
-    product_line = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[contains(@class,'o_input_dropdown')]//input[contains(@class,'ui-autocomplete-input')]")))
-    product_line.click()
+
+    wait = WebDriverWait(driver, 10)
+    product_cell_xpath = (
+        "(//tbody[contains(@class,'ui-sortable')]"
+        "//tr[contains(@class,'o_data_row')])[1]"
+        "//td[@name='product_id']"
+    )
+
+    cell = wait.until(EC.element_to_be_clickable((By.XPATH, product_cell_xpath)))
+
+    # Activate editor
+    ActionChains(driver).double_click(cell).perform()
+
+    ActionChains(driver)\
+        .send_keys(Keys.CONTROL, "a")\
+        .send_keys("MIWANI")\
+        .send_keys(Keys.ENTER)\
+        .perform()
+
+    time.sleep(3)
