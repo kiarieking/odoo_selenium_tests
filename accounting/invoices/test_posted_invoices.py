@@ -26,7 +26,8 @@ def test_add_credit_note(driver,login,accounting_icon):
     accounting_icon()
     group_invoices(driver)
     status = "Posted"
-    open_invoices(driver,status)
+    invoice_no = "INV/2025/0417"
+    open_specific_invoices(driver,status,invoice_no)
     add_creditnote(driver)
 
 @pytest.mark.order(24)
