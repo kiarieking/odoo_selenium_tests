@@ -63,7 +63,7 @@ def complete_delivery(driver):
     edit_btn.click()
     time.sleep(5)
     pod_input = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//input[@type='file' and @name='ufile']")))
-    pod_input.send_keys("/tmp/sample.pdf")
+    pod_input.send_keys("/home/kkiarie/Downloads/sample.pdf")
     time.sleep(5)
     wait = WebDriverWait(driver,15)
     wait.until(
