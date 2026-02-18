@@ -2,12 +2,19 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
+import os
 import time
 
+load_dotenv()
+
+email = os.getenv("EMAIL")
+password = os.getenv("PASSWORD")
+url = os.getenv("URL")
 
 def login(driver):
     def _login(email,password):
-        driver.get('https://sandbox.erp.quatrixglobal.com/')
+        driver.get(url)
 
         driver.find_element(By.ID, "login").send_keys(email)
         driver.find_element(By.ID, "password").send_keys(password)
@@ -16,7 +23,7 @@ def login(driver):
 
 
 def logout(driver):
-    driver.get('https://sandbox.erp.quatrixglobal.com/')
+    driver.get(url)
     usermenu = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//span[text()='Kelvin Kiarie']")))
     usermenu.click()
     logout_btn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[normalize-space(text())='Log out']")))
@@ -25,7 +32,7 @@ def logout(driver):
     
     
 def test_valid_login(driver, login):
-    login("kelvin.kiarie@quatrixglobal.com", "$kingara120")
+    login(email, password)
     discuss = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//a[@data-menu-xmlid='mail.menu_root_discuss']")))
     assert "Discuss" in discuss.text.strip()
     logout(driver)
