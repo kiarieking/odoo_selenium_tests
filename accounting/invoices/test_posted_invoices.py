@@ -16,8 +16,8 @@ def test_payment_invoice(driver,login,accounting_icon):
     accounting_icon()
     group_invoices(driver)
     status = "Posted"
-    # invoice_no = "INV/2025/0417"
-    open_invoice(driver,status)
+    invoice_no = "INV/2025/0418"
+    open_specific_invoice(driver,status,invoice_no)
     make_payment(driver)
 
 @pytest.mark.order(23)
@@ -78,16 +78,13 @@ def open_invoice(driver,status):
     )
     invoice.click()
 
-    # Scroll into view (critical for Odoo)
-    #driver.execute_script(
-        # "arguments[0].scrollIntoView({block:'center'});", invoice
-    # )
-
-    # Click with JS fallback
-    # try:
-    #     invoice.click()
-    # except Exception:
-    #     driver.execute_script("arguments[0].click();", invoice)
+def open_specific_invoice(driver,status,invoice_no):
+    status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+    invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+    invoice_grp.click()
+    invoice_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
+    invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
+    invoice.click()
 
 def make_payment(driver):
     register_payment_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.NAME,"action_register_payment")))
