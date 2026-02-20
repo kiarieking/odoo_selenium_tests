@@ -60,4 +60,14 @@ def open_creditnote(driver,status):
 def edit_credit_note(driver):
     edit_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
     edit_btn.click()
+    customer = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//input[@type='text' and contains(@class,'ui-autocomplete-input')]")))
+    customer.click()
+    select_customer = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[contains(@class,'ui-menu-item-wrapper') and normalize-space()='IN MOTION REGIONAL LOGISTICS LIMITED']")))
+    select_customer.click()
+    payment_reference = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//input[contains(@class,'o_field_char') and @name='payment_reference']")))
+    payment_reference.click()
+    payment_reference.clear()
+    payment_reference.send_keys("INV/2023/0844")
+    save_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']")))
+    save_btn.click()
     
