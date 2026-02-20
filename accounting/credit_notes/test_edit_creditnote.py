@@ -1,7 +1,9 @@
 import time
+from selenium.webdriver import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 from dotenv import load_dotenv
 import os
@@ -16,7 +18,8 @@ def test_edit_creditnote(driver,login,accounting_icon):
     group_creditnote(driver)
     status = "Draft"
     open_creditnote(driver,status)
-    edit_credit_note(driver)
+    # edit_credit_note(driver)
+    edit_invoice_line(driver)
     time.sleep(5)
 
 def group_creditnote(driver):
@@ -69,5 +72,34 @@ def edit_credit_note(driver):
     payment_reference.clear()
     payment_reference.send_keys("INV/2023/0844")
     save_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']")))
+    save_btn.click()
+
+def edit_invoice_line(driver):
+    edit_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
+    edit_btn.click()
+
+    wait = WebDriverWait(driver, 10)
+    product_cell_xpath = (
+        "(//tbody[contains(@class,'ui-sortable')]"
+        "//tr[contains(@class,'o_data_row')])[1]"
+        "//td[@name='product_id']"
+    )
+
+    cell = wait.until(EC.element_to_be_clickable((By.XPATH, product_cell_xpath)))
+
+    # Activate editor
+    ActionChains(driver).double_click(cell).perform()
+    time.sleep(3)
+    ActionChains(driver)\
+        .send_keys(Keys.CONTROL, "a")\
+        .send_keys("MIWANI")\
+        .send_keys(Keys.ENTER)\
+        .perform()
+
+    time.sleep(3)
+
+    save_btn = wait.until(EC.element_to_be_clickable((
+    By.XPATH, "//button[contains(@class,'o_form_button_save')]"
+)))
     save_btn.click()
     
