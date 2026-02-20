@@ -68,16 +68,7 @@ def open_invoices(driver,status):
     )
     invoice.click()
 
-    # Scroll into view (critical for Odoo)
-    #driver.execute_script(
-        # "arguments[0].scrollIntoView({block:'center'});", invoice
-    # )
-
-    # Click with JS fallback
-    # try:
-    #     invoice.click()
-    # except Exception:
-    #     driver.execute_script("arguments[0].click();", invoice)
+    
 
 def edit_invoice_details(driver):
     edit_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))

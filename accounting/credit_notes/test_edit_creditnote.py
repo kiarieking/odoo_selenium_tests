@@ -16,6 +16,8 @@ def test_edit_creditnote(driver,login,accounting_icon):
     group_creditnote(driver)
     status = "Draft"
     open_creditnote(driver,status)
+    edit_credit_note(driver)
+    time.sleep(5)
 
 def group_creditnote(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
@@ -50,8 +52,12 @@ def open_creditnote(driver,status):
     )
 
     # WAIT: element is visibfrom selenium.webdriver.common.keys import Keysle (NOT clickable)
-    invoice = wait.until(
+    credit_note = wait.until(
         EC.visibility_of_element_located((By.XPATH, first_credit_note_xpath))
     )
-    invoice.click()
+    credit_note.click()
+
+def edit_credit_note(driver):
+    edit_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'o_form_button_edit') and @title='Edit record']")))
+    edit_btn.click()
     
