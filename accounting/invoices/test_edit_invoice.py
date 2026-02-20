@@ -2,8 +2,6 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 import pytest
 from dotenv import load_dotenv
 import os
@@ -19,8 +17,8 @@ def test_edit_invoice(driver,login,accounting_icon):
     group_invoices(driver)
     status = "Draft"
     open_invoices(driver,status)
-    # edit_invoice_details(driver) 
-    edit_invoice_line(driver)
+    edit_invoice_details(driver) 
+    # edit_invoice_line(driver)
     time.sleep(3)
 
 def group_invoices(driver):
@@ -64,7 +62,7 @@ def open_invoices(driver,status):
         "//td[@name='name'])[1]"
     )
 
-    # WAIT: element is visibfrom selenium.webdriver.common.keys import Keysle (NOT clickable)
+    # WAIT: element is visible (NOT clickable)
     invoice = wait.until(
         EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
     )
@@ -131,49 +129,3 @@ def edit_invoice_line(driver):
     By.XPATH, "//button[contains(@class,'o_form_button_save')]"
 )))
     save_btn.click()
-
-# def edit_invoice_line(driver):
-#     wait = WebDriverWait(driver, 15)
-
-#     # Click Edit button
-#     wait.until(EC.element_to_be_clickable((
-#         By.XPATH, "//button[contains(@class,'o_form_button_edit')]"
-#     ))).click()
-
-#     # First product cell
-#     product_cell = wait.until(EC.element_to_be_clickable((
-#         By.XPATH,
-#         "(//tbody[contains(@class,'ui-sortable')]//tr[contains(@class,'o_data_row')])[1]"
-#         "//td[@name='product_id']"
-#     )))
-
-#     # Scroll into view and double-click only (avoid direct click)
-#     driver.execute_script("arguments[0].scrollIntoView(true);", product_cell)
-#     ActionChains(driver).move_to_element(product_cell).double_click(product_cell).perform()
-
-#     product_cell.click()
-#     # Brief pause for JS editor
-#     # time.sleep(0.3)
-
-#     # # Type the product name
-#     # actions = ActionChains(driver)
-#     # actions.send_keys(Keys.CONTROL, "a")
-#     # actions.send_keys(Keys.DELETE)
-#     # actions.send_keys("KAPSABET")
-#     # actions.perform()
-
-#     # # Trigger dropdown
-#     # ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
-
-#     # # Wait for dropdown items
-#     # wait.until(EC.presence_of_element_located((
-#     #     By.XPATH, "//ul[contains(@class,'ui-autocomplete')]//li"
-#     # )))
-
-#     # # Select first item and commit
-#     # ActionChains(driver).send_keys(Keys.ENTER).send_keys(Keys.TAB).perform()
-
-#     # # Save invoice
-#     # wait.until(EC.element_to_be_clickable((
-#     #     By.XPATH, "//button[contains(@class,'o_form_button_save')]"
-#     # ))).click()

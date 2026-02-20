@@ -6,62 +6,61 @@ pipeline{
 
     }
     stages{
-        stage("setup environment"){
+        stage("Setup Environment"){
             steps{
+                script{
+                    sh '''
+
+                    /home/kkiarie/scripts/ci_script.sh stage_setup_environment
+
+                    '''
+                }
+                }
                
-                sh '''
-                    
-
-                    pwd
-
-                    python3 -m venv venv
-
-                    . venv/bin/activate
-
-                    pip install -r requirements.txt
-
-
-                '''
-                
-
             }
             
-        }
-
+        
         stage("run the tests"){
             steps{
-                sh '''
-                    
-                    . venv/bin/activate
+                script{
+                     
+                    sh '''
 
-                    pytest -q --tb=short authentication/test_login.py::test_valid_login
+                        /home/kkiarie/scripts/ci_script.sh stage_run_tests
 
-                    echo "test confirm deploy2"
+                    '''
 
-                '''
+                }
+                
             }
         }
 
-        stage("Deploy changes"){
+        stage("Deploy changes!!!!"){
             steps{
-                sh '''
+                script{
+                    if (env.BRANCH_NAME == 'Main'){
+                                
+                        sh '''
 
-                    ssh kkiarie@sandbox.erp.quatrixglobal.com << EOF
+                            ssh kkiarie@sandbox.erp.quatrixglobal.com /opt/custom_modules/quatrix-odoo/scripts/deploy_script.sh stage_deploy_changes
 
-                    whoami
+                        '''
+                    }
 
-                    sudo systemctl stop odoo15
+                    else {
 
-                    cd /opt/odoo15
+                        sh '''
 
-                    /home/kkiarie/.pyenv/versions/odoo15env/bin/python3 ./odoo-bin -c /etc/odoo15/odoo.conf -d odoo15sandbox -u quatrix_dispatch_module --stop-after-init
+                            ssh kkiarie@sandbox.erp.quatrixglobal.com /opt/custom_modules/quatrix-odoo/scripts/deploy_script.sh stage_merge_changes
 
-                    sudo systemctl start odoo15
+                        '''
 
-                    exit
+                    }
 
-                    EOF
-                '''
+
+
+                }
+                
             }
         }
     }
@@ -83,9 +82,10 @@ pipeline{
             office365ConnectorSend(
                 status: "Build Status",
                 webhookUrl: "${MSTEAMS_HOOK}",
-                message: "Build failed",
+                message: "Build failed. Check build console on jenkins to see more details.",
                 color: "#FF0000 ",
             )
         }
     }
+
 }
