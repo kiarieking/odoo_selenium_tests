@@ -1,7 +1,9 @@
 import time
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from Group_Open_doc import Group_Open_doc
 import pytest
 from dotenv import load_dotenv
 import os
@@ -14,28 +16,32 @@ PASSWORD = os.getenv("PASSWORD")
 def test_edit_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_invoices(driver)
     status = "Draft"
-    open_invoices(driver,status)
-    edit_invoice_details(driver) 
+    group_invoices = Group_Open_doc()
+    group_invoices.group_by(driver)
+    
+    open_invoice = Group_Open_doc()
+    open_invoice.open_doc(driver,status)
     # edit_invoice_line(driver)
+
+    edit_invoice_details(driver)
     time.sleep(3)
 
-def group_invoices(driver):
-    customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
-    customers_btn.click()
-    invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
-    invoices.click()
-    WebDriverWait(driver,15).until(
-        EC.visibility_of_element_located(
-            (By.XPATH, "//li[contains(@class,'breadcrumb-item') and contains(@class,'active')]//span[normalize-space()='Invoices']")
-        )
-    )
+# def group_invoices(driver):
+#     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
+#     customers_btn.click()
+#     invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
+#     invoices.click()
+#     WebDriverWait(driver,15).until(
+#         EC.visibility_of_element_located(
+#             (By.XPATH, "//li[contains(@class,'breadcrumb-item') and contains(@class,'active')]//span[normalize-space()='Invoices']")
+#         )
+#     )
 
-    group_by = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[@class='o_dropdown_title' and normalize-space()='Group By']")))
-    group_by.click()
-    status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
-    status.click()
+#     group_by = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//span[@class='o_dropdown_title' and normalize-space()='Group By']")))
+#     group_by.click()
+#     status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
+#     status.click()
 
 # def open_invoices(driver,status,invoice_no):
 #     status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
@@ -45,28 +51,28 @@ def group_invoices(driver):
 #     invoice = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,invoice_xpath)))
 #     invoice.click()
 
-def open_invoices(driver,status):
-    print(">>> USING NEW open_invoices <<<")
-    status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
-    invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
-    invoice_grp.click()
-    wait = WebDriverWait(driver, 20)
-    wait.until(
-        EC.presence_of_element_located(
-            (By.XPATH, "//tbody//tr[contains(@class,'o_data_row')]")
-        )
-    )
+# def open_invoices(driver,status):
+#     print(">>> USING NEW open_invoices <<<")
+#     status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+#     invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+#     invoice_grp.click()
+#     wait = WebDriverWait(driver, 20)
+#     wait.until(
+#         EC.presence_of_element_located(
+#             (By.XPATH, "//tbody//tr[contains(@class,'o_data_row')]")
+#         )
+#     )
 
-    first_invoice_xpath = (
-        "(//tbody//tr[contains(@class,'o_data_row')]"
-        "//td[@name='name'])[1]"
-    )
+#     first_invoice_xpath = (
+#         "(//tbody//tr[contains(@class,'o_data_row')]"
+#         "//td[@name='name'])[1]"
+#     )
 
-    # WAIT: element is visible (NOT clickable)
-    invoice = wait.until(
-        EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
-    )
-    invoice.click()
+#     # WAIT: element is visible (NOT clickable)
+#     invoice = wait.until(
+#         EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
+#     )
+#     invoice.click()
 
     
 
