@@ -20,3 +20,27 @@ class Group_Open_doc:
         group_by_btn.click()
         status = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//span[@role='menuitemcheckbox' and normalize-space()='Status']")))
         status.click()
+
+    def open_doc(self,driver,status):
+        status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+        invoice_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+        invoice_grp.click()
+        wait = WebDriverWait(driver, 20)
+        wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//tbody//tr[contains(@class,'o_data_row')]")
+            )
+        )
+
+        first_invoice_xpath = (
+            "(//tbody//tr[contains(@class,'o_data_row')]"
+            "//td[@name='name'])[1]"
+        )
+
+        # WAIT: element is visible (NOT clickable)
+        invoice = wait.until(
+            EC.visibility_of_element_located((By.XPATH, first_invoice_xpath))
+        )
+        invoice.click()
+
+        
