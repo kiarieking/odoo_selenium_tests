@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-import pytest
+from accounting.Group_Open_doc import Group_Open_doc
 from dotenv import load_dotenv
 import os
 
@@ -12,12 +12,15 @@ load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
+grp_opn = Group_Open_doc()
+
 def test_edit_creditnote(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_creditnote(driver)
     status = "Draft"
-    open_creditnote(driver,status)
+    doc_type = "Credit Notes"
+    grp_opn.group_by(driver,doc_type)
+    grp_opn.open_doc(driver,status)
     # edit_credit_note(driver)
     edit_invoice_line(driver)
     time.sleep(5)

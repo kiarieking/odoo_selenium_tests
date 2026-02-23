@@ -3,7 +3,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from accounting.Group_Open_doc import Group_Open_doc
 import pytest
 from dotenv import load_dotenv
 import os
@@ -12,12 +12,15 @@ load_dotenv()
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
+grp_opn = Group_Open_doc()
+
 def test_make_payment_creditnote(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_creditnote(driver)
     status = "Posted"
     credit_note_no = "RINV/2025/0006"
+    doc_type = "Credit Notes"
+    grp_opn.group_by(driver,doc_type)
     open_specific_credit_note(driver,status,credit_note_no)
     make_payment(driver)
     time.sleep(5)
@@ -25,10 +28,21 @@ def test_make_payment_creditnote(driver,login,accounting_icon):
 def test_send_print_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_creditnote(driver)
     status = "Posted"
-    open_creditnote(driver,status)
+    doc_type = "Credit Notes"
+    grp_opn.group_by(driver,doc_type)
+    grp_opn.open_doc(driver,status)
     send_print_creditnote(driver)
+
+@pytest.mark.order(27)
+def test_reset_creditnote(driver,login,accounting_icon):
+    login(EMAIL,PASSWORD)
+    accounting_icon()
+    status = "Posted"
+    doc_type = "Credit Notes"
+    grp_opn.group_by(driver,doc_type)
+    grp_opn.open_doc(driver,status)
+    reset_creditnote(driver)
 
 def group_creditnote(driver):
     customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
@@ -88,3 +102,11 @@ def send_print_creditnote(driver):
     send_print_btn.click()
     send_invoice_txt = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//h4[normalize-space()='Send Invoice']")))
     assert send_invoice_txt.is_displayed
+
+def reset_creditnote(driver):
+    cancel_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[normalize-space()='Reset to Draft']]")))
+    cancel_btn.click()
+    time.sleep(3)
+    status = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[@data-value='draft']")))
+    title = status.get_attribute("title")
+    assert title == "Current state"

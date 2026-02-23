@@ -3,7 +3,7 @@ from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from Group_Open_doc import Group_Open_doc
+from accounting.Group_Open_doc import Group_Open_doc
 import pytest
 from dotenv import load_dotenv
 import os
