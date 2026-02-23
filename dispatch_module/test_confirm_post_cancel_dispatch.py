@@ -4,6 +4,7 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from Group_Open_Order import Group_Open_Order
 import pytest
 
 load_dotenv()
@@ -11,13 +12,16 @@ EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 POD_PATH = os.getenv("POD_PATH")
 
+
+grp_opn = Group_Open_Order()
+
 @pytest.mark.order(15)
 def test_confirm_dispatch(driver,login,dispatch_icon):
     status = "Quotation"
     login(EMAIL,PASSWORD)
     dispatch_icon()
-    group_dispatch(driver)
-    open_dispatch(driver,status)
+    grp_opn.group_orders(driver)
+    grp_opn.open_order(driver,status)
     complete_delivery(driver)
     time.sleep(5)
 
@@ -26,8 +30,8 @@ def test_post_dispatch(driver,login,dispatch_icon):
     status = "Dispatch Order"
     login(EMAIL,PASSWORD)
     dispatch_icon()
-    group_dispatch(driver)
-    open_dispatch(driver,status)
+    grp_opn.group_orders(driver)
+    grp_opn.open_order(driver,status)
     post_dispatch(driver)
 
 @pytest.mark.order(17)
@@ -35,8 +39,8 @@ def test_cancel_dispatch(driver, login, dispatch_icon):
     status = "Posted"
     login(EMAIL,PASSWORD)
     dispatch_icon()
-    group_dispatch(driver)
-    open_dispatch(driver,status)
+    grp_opn.group_orders(driver)
+    grp_opn.open_order(driver,status)
     cancel_dispatch(driver)
 
 
