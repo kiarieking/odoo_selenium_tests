@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+from Group_Open_Order import Group_Open_Order
 import os
 import time
 import pytest
@@ -10,14 +11,16 @@ load_dotenv()
 EMAIL = os.getenv('EMAIL')
 PASSWORD = os.getenv('PASSWORD')
 
+grp_opn = Group_Open_Order()
+
 @pytest.mark.order(7)
 def test_confirm_order(driver,login,carrier_icon):
     status = "Quotation"
     carrier_no = "CO13436"
     login(EMAIL,PASSWORD)
     carrier_icon()
-    group_orders(driver)
-    open_order(driver,status)
+    grp_opn.group_vouchers(driver)
+    grp_opn.open_voucher(driver,status)
     confirm_order(driver)
     time.sleep(2)
 
