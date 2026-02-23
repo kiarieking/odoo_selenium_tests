@@ -14,8 +14,9 @@ PASSWORD = os.getenv("PASSWORD")
 def test_payment_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_invoices(driver)
+    doc_type = "Invoices"
     status = "Posted"
+    group_invoices(driver,doc_type)
     invoice_no = "INV/2025/0418"
     open_specific_invoice(driver,status,invoice_no)
     make_payment(driver)
@@ -24,9 +25,9 @@ def test_payment_invoice(driver,login,accounting_icon):
 def test_add_credit_note(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_invoices(driver)
+    doc_type = "Invoices"
     status = "Posted"
-    # invoice_no = "INV/2025/0417"
+    group_invoices(driver,doc_type)
     open_invoice(driver,status)
     add_creditnote(driver)
 
@@ -34,8 +35,9 @@ def test_add_credit_note(driver,login,accounting_icon):
 def test_send_print_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
-    group_invoices(driver)
     status = "Posted"
+    doc_type = "Invoices"
+    group_invoices(driver,doc_type)
     open_invoice(driver,status)
     send_print_invoice(driver)
 

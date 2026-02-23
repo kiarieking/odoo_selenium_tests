@@ -5,14 +5,14 @@ class Group_Open_doc:
     def __init__(self):
         pass
 
-    def group_by(self,driver):
+    def group_by(self,driver,doc_type):
         customers_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[normalize-space()='Customers']]")))
         customers_btn.click()
-        invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Invoices']")))
+        invoices = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,f"//a[normalize-space()='{doc_type}']")))
         invoices.click()
         WebDriverWait(driver,15).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//li[contains(@class,'breadcrumb-item') and contains(@class,'active')]//span[normalize-space()='Invoices']")
+                (By.XPATH, f"//li[contains(@class,'breadcrumb-item') and contains(@class,'active')]//span[normalize-space()='{doc_type}']")
             )
         )
 

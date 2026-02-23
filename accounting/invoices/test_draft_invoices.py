@@ -20,7 +20,8 @@ def test_confirm_invoice(driver,login,accounting_icon):
     # group_invoices(driver)
     status = "Draft"
     invoice_no = "INV/2023/0844"
-    grp_opn.group_by(driver)
+    doc_type = "Invoices"
+    grp_opn.group_by(driver,doc_type)
     grp_opn.open_doc(driver,status)
     # open_invoices(driver,status) 
     confirm_invoice(driver)
@@ -31,8 +32,9 @@ def test_preview_invoice(driver,login,accounting_icon):
     login(EMAIL,PASSWORD)
     accounting_icon()
     status = "Draft"
+    doc_type = "Invoices"
+    grp_opn.group_by(driver,doc_type)
     grp_opn.open_doc(driver,status)
-    open_invoices(driver,status)
     preview_invoice(driver)
     time.sleep(3)
 
@@ -42,7 +44,8 @@ def test_cancel_invoice(driver,login,accounting_icon):
     accounting_icon()
     status = "Draft"
     invoice_no = "INV/2023/0844"
-    grp_opn.group_by(driver)
+    doc_type = "Invoices"
+    grp_opn.group_by(driver,doc_type)
     grp_opn.open_doc(driver,status)
     cancel_invoice(driver)
     time.sleep(3)
