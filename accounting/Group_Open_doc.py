@@ -43,4 +43,12 @@ class Group_Open_doc:
         )
         invoice.click()
 
+    def open_specific_doc(self,driver,status,invoice_no):
+        status_xpath = f"//th[@class='o_group_name' and contains(normalize-space(), '{status}')]"
+        doc_grp = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,status_xpath)))
+        doc_grp.click()
+        doc_xpath = f"//td[@name='name' and normalize-space()='{invoice_no}']"
+        doc = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,doc_xpath)))
+        doc.click()
+
         
